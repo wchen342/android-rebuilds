@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Remove old image if exists
+if [[ "$(docker images -q android-rebuilds:base 2> /dev/null)" != "" ]]; then
+    docker image rm android-rebuilds:base
+fi
+
 docker pull debian:bookworm
 docker build -t android-rebuilds:base .
 

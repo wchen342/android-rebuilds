@@ -3,14 +3,14 @@ set -eu -o pipefail
 
 pushd ../base && source ./setup.sh && popd
 
-container_name="android-rebuilds:sdk"
+container_name="android-rebuilds-sdk"
 
 docker create --name ${container_name} --workdir /home/build/wd --entrypoint "tail" android-rebuilds:base "-f" "/dev/null"
 docker start "${container_name}"
 
 # Run build script
 docker cp docker-build.sh "${container_name}":/home/build/wd/docker-build.sh
-docker exec --user build "${container_name}" /home/build/wd/docker-build.sh
+docker exec --user build "${container_name}" bash -c "/home/build/wd/docker-build.sh"
 
 # copy output
 

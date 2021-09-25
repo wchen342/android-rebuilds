@@ -24,4 +24,4 @@ mkdir -p /home/build/wd
 chown -R build:build /home/build
 
 # Set up git
-su -c - build 'git config --global user.email "you@example.com" && git config --global user.name "Your Name"'
+su -c - build 'git config --global user.email "you@example.com" && git config --global user.name "Your Name" && git config --global color.ui true'
