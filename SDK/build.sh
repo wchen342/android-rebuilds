@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu -o pipefail
 
-source ../base/setup.sh
+pushd ../base && source ./setup.sh && popd
 
 container_name="android-rebuilds:sdk"
 
