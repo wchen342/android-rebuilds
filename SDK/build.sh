@@ -10,6 +10,15 @@ docker start "${container_name}"
 
 # Run build script
 docker cp docker-build.sh "${container_name}":/home/build/wd/docker-build.sh
+docker cp art.patch "${container_name}":/home/build/wd/art.patch
+docker cp bionic_libc.patch "${container_name}":/home/build/wd/bionic_libc.patch
+docker cp external_conscrypt.patch "${container_name}":/home/build/wd/external_conscrypt.patch
+docker cp external_icu_android_icu4j.patch "${container_name}":/home/build/wd/external_icu_android_icu4j.patch
+docker cp external_libxml2.patch "${container_name}":/home/build/wd/external_libxml2.patch
+docker cp frameworks_base.patch "${container_name}":/home/build/wd/frameworks_base.patch
+docker cp hardware_interfaces.patch "${container_name}":/home/build/wd/hardware_interfaces.patch
+docker cp prebuilts_tools.patch "${container_name}":/home/build/wd/prebuilts_tools.patch
+docker cp packages_modules_NeuralNetworks.patch "${container_name}":/home/build/wd/packages_modules_NeuralNetworks.patch
 docker exec --user build "${container_name}" bash -c "/home/build/wd/docker-build.sh"
 
 # copy output

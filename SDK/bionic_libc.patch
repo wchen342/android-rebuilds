@@ -1,0 +1,11 @@
+diff --git a/libc/Android.bp b/libc/Android.bp
+--- a/libc/Android.bp
++++ b/libc/Android.bp
+@@ -1934,6 +1934,7 @@ cc_library_headers {
+     visibility: [
+         "//bionic:__subpackages__", // visible to bionic
+         // ... and only to these places (b/152668052)
++        "//art/tools/cpp-define-generator",
+         "//external/arm-optimized-routines",
+         "//external/gwp_asan",
+         "//external/jemalloc_new",

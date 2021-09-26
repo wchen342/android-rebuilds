@@ -1,0 +1,51 @@
+diff --git a/common/Android.bp b/common/Android.bp
+--- a/common/Android.bp
++++ b/common/Android.bp
+@@ -90,7 +90,6 @@ cc_defaults {
+         "operations/UnidirectionalSequenceLSTM.cpp",
+         "operations/UnidirectionalSequenceRNN.cpp",
+     ],
+-    tidy_disabled_srcs: tidy_disabled_common_operations_files,
+ }
+ 
+ cc_library_static {
+diff --git a/runtime/test/Android.bp b/runtime/test/Android.bp
+--- a/runtime/test/Android.bp
++++ b/runtime/test/Android.bp
+@@ -112,9 +112,6 @@ cc_defaults {
+         "TestValidation.cpp",
+         "TestWrapper.cpp",
+     ],
+-    tidy_disabled_srcs: [
+-        "TestValidateModel.cpp", // includes large generated code
+-    ],
+     header_libs: [
+         "libneuralnetworks_common_headers",
+     ],
+@@ -257,7 +254,6 @@ cc_test {
+         "fuzzing/TestRandomGraph.cpp",
+         "fuzzing/operation_signatures/*.cpp",
+     ],
+-    tidy_disabled_srcs: tidy_disabled_operation_signatures_files,
+     static_libs: [
+         "libSampleDriver",
+         "libgmock",
+@@ -457,10 +453,6 @@ cc_library_static {
+         "generated/spec_V1_*/*.example.cpp",
+     ],
+     // generated code are too big to run with clang-tidy
+-    tidy_disabled_srcs: [
+-        "generated/spec_V1_*/*.example.cpp",
+-        "TestValidateModel.cpp", // includes large generated code
+-    ] + tidy_disabled_operation_signatures_files,
+     include_dirs: [
+         "packages/modules/NeuralNetworks/common/include",
+         "packages/modules/NeuralNetworks/runtime/",
+@@ -577,7 +569,6 @@ cc_library_static {
+         "fuzzing/RandomVariable.cpp",
+         "fuzzing/operation_signatures/*.cpp",
+     ],
+-    tidy_disabled_srcs: tidy_disabled_operation_signatures_files,
+     include_dirs: [
+         "packages/modules/NeuralNetworks/common/include",
+         "packages/modules/NeuralNetworks/runtime/",

@@ -1,0 +1,27 @@
+diff --git a/android_icu4j/Android.bp b/android_icu4j/Android.bp
+--- a/android_icu4j/Android.bp
++++ b/android_icu4j/Android.bp
+@@ -171,6 +171,7 @@ java_sdk_library {
+         "//build/soong/java/core-libraries",
+         "//frameworks/base",
+         "//frameworks/base/api",
++        "//libcore:__subpackages__",
+         "//packages/modules/RuntimeI18n/apex",
+         // Visibility for prebuilt i18n-module-sdk from the prebuilt of
+         // this module.
+@@ -329,6 +330,7 @@ java_sdk_library {
+     ],
+     visibility: [
+         "//build/soong/java/core-libraries",
++        "//libcore:__subpackages__",
+         "//packages/modules/RuntimeI18n/apex",
+         // Visibility for prebuilt i18n-module-sdk from the prebuilt of
+         // this module.
+@@ -359,6 +361,7 @@ java_sdk_library {
+     ],
+     visibility: [
+         "//build/soong/java/core-libraries",
++        "//libcore:__subpackages__",
+         "//packages/modules/RuntimeI18n/apex",
+         // Visibility for prebuilt i18n-module-sdk from the prebuilt of
+         // this module.

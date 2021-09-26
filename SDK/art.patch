@@ -1,0 +1,82 @@
+diff --git a/build/art.go b/build/art.go
+--- a/build/art.go
++++ b/build/art.go
+@@ -305,9 +305,7 @@ func testcasesContent(config android.Config) map[string]string {
+ // The 'key' is the file in testcases and 'value' is the path to copy it from.
+ // The actual copy will be done in make since soong does not do installations.
+ func addTestcasesFile(ctx android.InstallHookContext) {
+-	if ctx.Os() != android.BuildOs || ctx.Module().IsSkipInstall() {
+ 		return
+-	}
+ 
+ 	testcasesContent := testcasesContent(ctx.Config())
+ 
+diff --git a/libdexfile/Android.bp b/libdexfile/Android.bp
+--- a/libdexfile/Android.bp
++++ b/libdexfile/Android.bp
+@@ -162,6 +162,7 @@ gensrcs {
+ 
+ art_cc_library {
+     name: "libdexfile",
++    visibility: ["//visibility:public"],
+     defaults: [
+         "libdexfile_defaults",
+         "libart_nativeunwind_defaults",
+diff --git a/runtime/arch/x86_64/asm_support_x86_64.S b/runtime/arch/x86_64/asm_support_x86_64.S
+--- a/runtime/arch/x86_64/asm_support_x86_64.S
++++ b/runtime/arch/x86_64/asm_support_x86_64.S
+@@ -83,7 +83,7 @@
+     // differ in the behaviour, so explicitly set the CFA to avoid any ambiguity.
+     // The restored CFA state should match the CFA state during CFI_REMEMBER_STATE.
+     // `objdump -Wf libart.so | egrep "_cfa|_state"` is useful to audit the opcodes.
+-    #define CFI_RESTORE_STATE_AND_DEF_CFA(reg,off) .cfi_restore_state .cfi_def_cfa reg,off
++    #define CFI_RESTORE_STATE_AND_DEF_CFA(reg,off) .cfi_def_cfa reg,off
+     #define CFI_RESTORE_STATE .cfi_restore_state
+ #else
+     // Mac OS' doesn't like cfi_* directives.
+diff --git a/runtime/arch/x86_64/jni_entrypoints_x86_64.S b/runtime/arch/x86_64/jni_entrypoints_x86_64.S
+--- a/runtime/arch/x86_64/jni_entrypoints_x86_64.S
++++ b/runtime/arch/x86_64/jni_entrypoints_x86_64.S
+@@ -304,6 +304,7 @@ DEFINE_FUNCTION art_jni_dlsym_lookup_critical_stub
+ 
+     // Do the tail call.
+     jmp *%rax
++    CFI_RESTORE_STATE
+     CFI_RESTORE_STATE_AND_DEF_CFA(%rbp, FRAME_SIZE_SAVE_REFS_AND_ARGS)
+ 
+ .Lcritical_deliver_exception:
+diff --git a/runtime/arch/x86_64/quick_entrypoints_x86_64.S b/runtime/arch/x86_64/quick_entrypoints_x86_64.S
+--- a/runtime/arch/x86_64/quick_entrypoints_x86_64.S
++++ b/runtime/arch/x86_64/quick_entrypoints_x86_64.S
+@@ -736,6 +736,7 @@ MACRO3(ONE_ARG_SAVE_EVERYTHING_DOWNCALL, c_name, cxx_name, runtime_method_offset
+     CFI_REMEMBER_STATE
+     RESTORE_SAVE_EVERYTHING_FRAME_KEEP_RAX        // restore frame up to return address
+     ret
++    CFI_RESTORE_STATE
+     CFI_RESTORE_STATE_AND_DEF_CFA(rsp, FRAME_SIZE_SAVE_EVERYTHING)
+ 1:
+     DELIVER_PENDING_EXCEPTION_FRAME_READY
+@@ -1187,6 +1188,7 @@ DEFINE_FUNCTION art_quick_check_instance_of
+     addq LITERAL(24), %rsp            // pop arguments
+     CFI_ADJUST_CFA_OFFSET(-24)
+     ret
++    CFI_RESTORE_STATE
+     CFI_RESTORE_STATE_AND_DEF_CFA(rsp, 64)  // Reset unwind info so following code unwinds.
+ 
+ .Lthrow_class_cast_exception:
+@@ -1660,6 +1662,7 @@ DEFINE_FUNCTION art_quick_generic_jni_trampoline
+     ret
+ 
+     // Undo the unwinding information from above since it doesn't apply below.
++    CFI_RESTORE_STATE
+     CFI_RESTORE_STATE_AND_DEF_CFA(rbp, 208)
+ .Lexception_in_native:
+     pushq %gs:THREAD_TOP_QUICK_FRAME_OFFSET
+@@ -2098,6 +2101,7 @@ DEFINE_FUNCTION art_quick_osr_stub
+     movq %rax, (%rcx)              // Store the result.
+     ret
+ .Losr_entry:
++    CFI_RESTORE_STATE
+     CFI_RESTORE_STATE_AND_DEF_CFA(rsp, 80)
+     // Since the call has pushed the return address we need to switch the CFA register to RBP.
+     CFI_DEF_CFA_REGISTER(rbp)

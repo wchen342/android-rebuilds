@@ -1,0 +1,12 @@
+diff --git a/Android.bp b/Android.bp
+--- a/Android.bp
++++ b/Android.bp
+@@ -179,6 +179,8 @@ cc_library {
+     },
+     apex_available: [
+         "//apex_available:platform",
++        "com.android.art",
++        "com.android.art.debug",
+         "com.android.runtime", // used by linkerconfig
+         "com.android.virt",
+     ],
