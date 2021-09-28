@@ -52,6 +52,7 @@ pushd external/libxml2 && git apply ../../external_libxml2.patch && popd
 # Revert https://android.googlesource.com/platform/frameworks/base/+/061b25ec6f2786662123becbe1c6d5c098922c73%5E%21/#F0
 pushd frameworks/base && git apply ../../frameworks_base.patch && popd
 pushd hardware/interfaces && git apply ../../hardware_interfaces.patch && popd
+pushd libcore && git apply ../../libcore.patch && popd
 pushd prebuilts/tools && git apply ../../prebuilts_tools.patch && popd
 pushd packages/modules/NeuralNetworks && git apply ../../../packages_modules_NeuralNetworks.patch && popd
 
@@ -59,7 +60,7 @@ pushd packages/modules/NeuralNetworks && git apply ../../../packages_modules_Neu
 # build/envsetup.sh cannot be run with -u
 set +u
 source build/envsetup.sh
-lunch aosp_arm64-${TARGET}
+lunch sdk_arm64-${TARGET}
 set -u
 
 # win_sdk build linux SDK too
