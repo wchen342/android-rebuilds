@@ -19,6 +19,9 @@ apt -y install git gnupg flex bison build-essential zip \
     libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig tofrodos \
     rsync dos2unix pbzip2
 
+# For NDK
+apt -y install  python3-pip python3-apt texinfo
+
 # Set up user and working directory
 useradd build -m -s /bin/bash
 mkdir -p /home/build/wd
