@@ -17,7 +17,7 @@ apt -y install git gnupg flex bison build-essential zip \
     curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 libncurses5 \
     lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev \
     libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig tofrodos \
-    rsync dos2unix pbzip2
+    rsync dos2unix pbzip2 python2
 
 # For NDK
 apt -y install  python3-pip python3-apt texinfo

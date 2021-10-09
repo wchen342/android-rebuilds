@@ -1,0 +1,9 @@
+diff --git a/build/tools/mk_sources_zip.py b/build/tools/mk_sources_zip.py
+--- a/build/tools/mk_sources_zip.py
++++ b/build/tools/mk_sources_zip.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python2
+ #
+ # Copyright (C) 2011 The Android Open Source Project
+ #
