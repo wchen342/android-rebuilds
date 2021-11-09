@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eux -o pipefail
 
-VERSION='r23'    # temporarily before SDK 12 comes out formally
+VERSION='r23'
 
 export USER=$(whoami)
 
